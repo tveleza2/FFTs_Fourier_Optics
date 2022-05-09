@@ -6,6 +6,7 @@ def phase( fv , size):
    return np.exp2(-(2 * np.pi * 1j * fv) / size)
 
 
+
 def fft(x):
    ''' FFT of 1-d signals
    usage : X = fft(x)
