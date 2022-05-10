@@ -24,6 +24,7 @@ def FFT(x):
 
 def pad2(x):
    m, n = np.shape(x)
+   M, N = 2 ** int(np.ceil(np.log(m, 2))), 2 ** int(np.ceil(np.log(n, 2)))
    F = np.zeros((M,N), dtype = x.dtype)
    F[0:m, 0:n] = x
    return F, m, n
