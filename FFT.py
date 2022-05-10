@@ -30,9 +30,15 @@ def pad2(x):
    return F, m, n
 
 
-def fft2(f):
+def FFT2(f):
    '''FFT of 2-d signals/images with padding
    usage X, m, n = fft2(x), where m and n are dimensions of original signal'''
 
    f, m, n = pad2(f)
    return np.transpose(FFT(np.transpose(FFT(f)))), m, n
+
+def NUFFT(F,X):
+
+
+   out = 0
+   return out
