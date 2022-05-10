@@ -19,12 +19,16 @@ def fft(x):
    Feven, Fodd = fft(x[0::2]), fft(x[1::2])
    combined = [0] * n
    for m in range(int(n/2)):
-     combined[m] = Feven[m] + phase(m,n) * Fodd[m]
-     combined[m + int(n/2)] = Feven[m] - phase(m,n) * Fodd[m]
+     combined[m] = combined[m] + Feven[m] + phase(m,n) * Fodd[m]
+     combined[int(m + n/2)] = combined[int(m + n/2)] + Feven[m] - phase(m,n) * Fodd[m]
    return combined
 
+
+
+
+
 x = np.linspace(-2*np.pi,2*np.pi,512)
-y = np.cos(0.25*x)
+y = np.cos(x)
 F = fft(y)
 plt.plot(x,y)
 plt.show()
