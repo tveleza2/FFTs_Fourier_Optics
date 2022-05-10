@@ -21,3 +21,17 @@ def FFT(x):
             [X_even+factor[:int(N/2)]*X_odd,
              X_even+factor[int(N/2):]*X_odd])
         return X
+
+def pad2(x):
+   m, n = np.shape(x)
+   F = np.zeros((M,N), dtype = x.dtype)
+   F[0:m, 0:n] = x
+   return F, m, n
+
+
+def fft2(f):
+   '''FFT of 2-d signals/images with padding
+   usage X, m, n = fft2(x), where m and n are dimensions of original signal'''
+
+   f, m, n = pad2(f)
+   return np.transpose(FFT(np.transpose(FFT(f)))), m, n
