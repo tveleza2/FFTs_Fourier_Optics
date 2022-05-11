@@ -38,7 +38,9 @@ def FFT2(f):
    return np.transpose(FFT(np.transpose(FFT(f)))), m, n
 
 def NUFFT(F,X):
-
-
+   N = len(X)
+   R = 1
+   M_r = R*N
+   k = np.linspace(-N/2,N/2,N)
    out = 0
    return out
