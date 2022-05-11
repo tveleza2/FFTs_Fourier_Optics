@@ -41,6 +41,6 @@ def NUFFT(F,X):
    N = len(X)
    R = 1
    M_r = R*N
-   k = np.linspace(-N/2,N/2,N)
+   k = np.linspace(-N/2,N/2,N) 
    out = 0
    return out
