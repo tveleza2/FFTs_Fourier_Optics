@@ -35,7 +35,25 @@ def FFT2(f):
    usage X, m, n = fft2(x), where m and n are dimensions of original signal'''
 
    f, m, n = pad2(f)
-   return np.transpose(FFT(np.transpose(FFT(f)))), m, n
+   return np.transpose(FFT(np.transpose(FFT(f))))
+   
+
+def DFT(x):
+    """
+    Function to calculate the 
+    discrete Fourier Transform 
+    of a 1D real-valued signal x
+    """
+
+    N = len(x)
+    n = np.arange(N)
+    k = n.reshape((N, 1))
+
+    e = np.exp(-2j * np.pi * k * n / N)
+    
+    X = np.dot(e, x)
+    
+    return X
 
 def NUFFT(F,X):
    N = len(X)
