@@ -71,7 +71,6 @@ def NUFFT(Func,X):
    return out,df
 
 def NUFFT2(Func,X,Y):
-    
     return np.transpose(NUFFT(np.transpose(NUFFT(Func,X)),Y))
 
 def mindis(V):
