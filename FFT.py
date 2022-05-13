@@ -38,27 +38,47 @@ def FFT2(f):
    return np.transpose(FFT(np.transpose(FFT(f))))
    
 
-def DFT(x):
+def DFT(x,cords=None,frecs=None):
     """
     Function to calculate the 
     discrete Fourier Transform 
     of a 1D real-valued signal x
     """
+    if cords == None:
+        N = len(x)
+        n = np.arange(N)
+        k = n.reshape((N, 1))/N
+    else:
+        k = frecs
+        n = cords
 
-    N = len(x)
-    n = np.arange(N)
-    k = n.reshape((N, 1))
-
-    e = np.exp(-2j * np.pi * k * n / N)
+    e = np.exp(-2j * np.pi * k * n)
     
     X = np.dot(e, x)
     
     return X
 
-def NUFFT(F,X):
-   N = len(X)
-   R = 1
-   M_r = R*N
-   k = np.linspace(-N/2,N/2,N) 
-   out = 0
-   return out
+def NUFFT(Func,X):
+   '''Function to calculate de DFT of a group of not evenly sampled
+   1D groups of data'''
+   Xmax = np.amax(X)
+   df = 1/Xmax
+   mdx = mindis(X)
+   Fmax = 1/mdx
+   N = Fmax // df
+   Frecs = np.linspace(-Fmax,Fmax,N)
+   out = DFT(Func,X,Frecs)
+   return out,df
+
+def NUFFT2(Func,X,Y):
+    
+    return np.transpose(NUFFT(np.transpose(NUFFT(Func,X)),Y))
+
+def mindis(V):
+    d = abs(np.amax(V))
+    for i in range(len(V)-1):
+        dtemp = abs(V[i]-V[i+1])
+        if dtemp < d:
+            dtemp = d
+    return d
+
