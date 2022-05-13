@@ -33,9 +33,8 @@ def pad2(x):
 def FFT2(f):
    '''FFT of 2-d signals/images with padding
    usage X, m, n = fft2(x), where m and n are dimensions of original signal'''
-
-   f, m, n = pad2(f)
-   return np.transpose(FFT(np.transpose(FFT(f))))
+#    f, m, n = pad2(f)
+   return np.fft.ifftshift(np.transpose(DFT(np.transpose(DFT(f)))))
    
 
 def DFT(x,cords=None,frecs=None):
