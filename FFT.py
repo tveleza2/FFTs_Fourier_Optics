@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def FFT(x):
     """
@@ -29,29 +30,32 @@ def pad2(x):
    F[0:m, 0:n] = x
    return F, m, n
 
-
 def FFT2(f):
    '''FFT of 2-d signals/images with padding
    usage X, m, n = fft2(x), where m and n are dimensions of original signal'''
 #    f, m, n = pad2(f)
    return np.fft.ifftshift(np.transpose(DFT(np.transpose(DFT(f)))))
    
-
-def DFT(x,cords=None,frecs=None):
+def DFT(x,cords=None,frecs=None,modes='U'):
     """
     Function to calculate the 
     discrete Fourier Transform 
     of a 1D real-valued signal x
     """
-    if cords == None:
-        N = len(x)
-        n = np.arange(N)
-        k = n.reshape((N, 1))/N
-    else:
-        k = frecs
+    
+    N = len(x)
+    n = np.arange(N)
+    k = n.reshape((N, 1))/N
+    var = k*n
+    if modes != 'U':
+        N = len(frecs)
+        k = np.reshape(frecs,(N,1))
+        print('k =',k)
         n = cords
+        print('n =',n)
+        var = np.multiply(k,n)
 
-    e = np.exp(-2j * np.pi * k * n)
+    e = np.exp(-2j * np.pi * var)
     
     X = np.dot(e, x)
     
@@ -64,10 +68,10 @@ def NUFFT(Func,X):
    df = 1/Xmax
    mdx = mindis(X)
    Fmax = 1/mdx
-   N = Fmax // df
-   Frecs = np.linspace(-Fmax,Fmax,N)
-   out = DFT(Func,X,Frecs)
-   return out,df
+   N = int(Fmax/df)
+   Frecs = np.linspace(0,Fmax,N)
+   out = DFT(Func,X,Frecs,'NU')
+   return out,Frecs
 
 def NUFFT2(Func,X,Y):
     return np.transpose(NUFFT(np.transpose(NUFFT(Func,X)),Y))
@@ -77,6 +81,12 @@ def mindis(V):
     for i in range(len(V)-1):
         dtemp = abs(V[i]-V[i+1])
         if dtemp < d:
-            dtemp = d
+            d = dtemp
+        
     return d
 
+x = np.linspace(0,2*np.pi,50)
+y = np.cos(x)
+FT, f = NUFFT(y,x)
+plt.plot(np.abs(np.fft.fftshift(FT)**2))
+plt.show()
