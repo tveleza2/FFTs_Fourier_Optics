@@ -93,8 +93,10 @@ def rect(x):
             y[i]=1
     return y
 
-x = np.linspace(0,2*np.pi,1000)
-y = rect(x)
-FT, f = NUFFT(y,x)
-plt.plot( np.abs(np.fft.fftshift(FT)))
-plt.show()
+def normalize(x):
+    minimum = np.amin(x)
+    x = x-minimum
+    maximum = np.amax(x)
+    x = x/maximum
+    return x
+
