@@ -1,3 +1,4 @@
+from math import pi
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -85,8 +86,15 @@ def mindis(V):
         
     return d
 
-x = np.linspace(0,2*np.pi,50)
-y = np.cos(x)
+def rect(x):
+    y = np.zeros_like(x)
+    for i in range(len(y)):
+        if abs(x[i])<0.5:
+            y[i]=1
+    return y
+
+x = np.linspace(0,2*np.pi,1000)
+y = rect(x)
 FT, f = NUFFT(y,x)
-plt.plot(np.abs(np.fft.fftshift(FT)**2))
+plt.plot( np.abs(np.fft.fftshift(FT)))
 plt.show()
