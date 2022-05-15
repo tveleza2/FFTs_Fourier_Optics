@@ -37,10 +37,10 @@ def circ2(X, Y, radius):
     return IN
 
 # Changing parameters for this simulation
-r = 0.1 # radius of the apperture in meters
-n = 512 # Number of divisions per axis on every domain
-z = 100 # propagation distance in meters
-vw = 2 # Window of visualization
+r = 0.05 # radius of the apperture in meters
+n = 64 # Number of divisions per axis on every domain
+z = 1000 # propagation distance in meters
+vw = 1 # Window of visualization
 wavelength = 655*10**(-9) # Wavelength of the light
 
 size = [-vw,vw]

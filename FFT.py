@@ -72,6 +72,7 @@ def NUFFT(Func,X):
    N = int(Fmax/df)
    Frecs = np.linspace(0,Fmax,N)
    out = DFT(Func,X,Frecs,'NU')
+   Frecs = Frecs-Fmax/2
    return out,Frecs
 
 def NUFFT2(Func,X,Y):
@@ -100,3 +101,11 @@ def normalize(x):
     x = x/maximum
     return x
 
+x = np.linspace(0,2*np.pi,100)
+y = rect(x)
+frec = np.fft.fftfreq(100)
+FT, f = NUFFT(y,x)
+FTEO = np.fft.fftshift(np.fft.fft(y))
+plt.plot(normalize(np.abs(np.fft.fftshift(FT))))
+plt.plot(normalize(np.abs(FTEO)))
+plt.show()
