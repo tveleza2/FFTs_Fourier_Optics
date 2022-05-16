@@ -4,12 +4,6 @@ from matplotlib import pyplot as plt
 import FFT as F
 
 
-def normalize(A):
-    mini = np.amin(A)
-    A = A - mini
-    maxi = np.amax(A)
-    A = A / maxi
-
 def imageShow (inp, title):
     '''
     # Function to display an image
@@ -37,11 +31,11 @@ def circ2(X, Y, radius):
     return IN
 
 # Changing parameters for this simulation
-r = 0.05 # radius of the apperture in meters
-n = 64 # Number of divisions per axis on every domain
-z = 1000 # propagation distance in meters
-vw = 1 # Window of visualization
-wavelength = 655*10**(-9) # Wavelength of the light
+r = 0.01 # radius of the apperture in meters
+n = 512 # Number of divisions per axis on every domain
+z = 600 # propagation distance in meters
+vw = z/3000 # Window of visualization, mantaining an aspect ratio between de distance propagated and the width of the patern
+wavelength = 655 * 10**(-9) # Wavelength of the light
 
 size = [-vw,vw]
 d = (size[1]-size[0])/n
@@ -50,7 +44,8 @@ x = y = np.linspace(size[0],size[1],n)
 X,Y = np.meshgrid(x,y)
 
 Aperture = circ2(X,Y,r)
-Illumination = np.exp(1j*2*np.pi*z)
+imageShow(Aperture,'Aperture')
+Illumination = np.exp(-1j*2*np.pi*z/wavelength)
 Uin = Aperture * Illumination
-output = AS(Uin,z,n,n,wavelength)
-imageShow(np.abs(output),'Propagated Light')
+output = F.normalize(np.abs(AS(Uin,z,n,n,wavelength,d,d)))
+imageShow(output,'Propagated Light')

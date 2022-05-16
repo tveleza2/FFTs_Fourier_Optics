@@ -1,33 +1,26 @@
 import numpy as np
 import FFT
-from matplotlib import pyplot as plt
-def imageShow (inp, title):
+
+
+def Angular_Spectrum(Uin, z, x, y, wavelength, dx=1, dy=1):
     '''
-    # Function to display an image
+    # Function to propagate a complex Field by the Angular spectrum theory
     # Inputs:
-    # inp - The input complex field
-    # title - The title of the displayed image        
+    # Uin - The input complex field
+    # z - The propagation distance
+    #    
     '''
-    plt.imshow(inp, cmap='gray'), plt.title(title)  # image in gray scale
-    plt.show()  # show image
 
-    return
-
-def normalize(A):
-    mini = np.amin(A)
-    A = A - mini
-    maxi = np.amax(A)
-    A = A / maxi
-    return A
-
-def Angular_Spectrum(Uin, z, x, y,wavelength):
     Uspec = FFT.FFT2(np.fft.fftshift(Uin))
-    # Uspec = normalize(Uspec)
-    fx = np.fft.fftshift(np.fft.fftfreq(x))
-    fy = np.flip(np.fft.fftshift(np.fft.fftfreq(y)))
+
+    fx = np.fft.fftshift(np.fft.fftfreq(x,dx))
+    fy = np.flip(np.fft.fftshift(np.fft.fftfreq(y,dy)))
     FX,FY = np.meshgrid(fx,fy) 
+
     phase = np.exp(2j*z*np.pi*np.sqrt(np.power(1/wavelength, 2) - np.power(FX, 2) - np.power(FY, 2)))
+    
     Uout = Uspec * phase
     Uout= FFT.FFT2(np.fft.ifftshift(Uout))
+    
     return Uout
 
