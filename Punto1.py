@@ -109,6 +109,7 @@ fig.colorbar(im)
 
 fig.tight_layout()
 
+plt.title('First Problem, Second Exam, Fourier Optics')
 plt.savefig('D:\OneDrive - Universidad EAFIT\Semestre VII\Fourier Optics\Parcial2\Punto1\Punto1.jpg',dpi=1200)
 plt.show()
 

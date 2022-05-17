@@ -1,3 +1,4 @@
+from attr import field
 import numpy as np
 import FFT
 import pdb
@@ -26,6 +27,37 @@ def Angular_Spectrum(Uin, z, x, y, wavelength, dx=1, dy=1):
     Uout= FFT.FFT2(np.fft.ifftshift(Uout))
     
     return Uout
+
+def np_as(field, z, wavelength, dx, dy):
+    '''
+    # Function to diffract a complex field using the angular spectrum approach
+    # Inputs:
+    # field - complex field
+    # z - propagation distance
+    # wavelength - wavelength
+    # dx/dy - sampling pitches
+    '''
+    M, N = field.shape
+    x = np.arange(0, N, 1)  # array x
+    y = np.arange(0, M, 1)  # array y
+    X, Y = np.meshgrid(x - (N / 2), y - (M / 2), indexing='xy')
+
+    dfx = 1 / (dx * M)
+    dfy = 1 / (dy * N)
+    
+    field_spec = np.fft.fftshift(field)
+    field_spec = np.fft.fft2(field_spec)
+    field_spec = np.fft.fftshift(field_spec)
+        
+    phase = np.exp2(1j * z * np.pi * np.sqrt(np.power(1/wavelength, 2) - (np.power(X * dfx, 2) + np.power(Y * dfy, 2))))
+	
+    tmp = field_spec*phase
+    
+    out = np.fft.ifftshift(tmp)
+    out = np.fft.ifft2(out)
+    out = np.fft.ifftshift(out)
+	
+    return out
 
 
 def RS_1(Uin, z, dx=1, dy=1, wavelength=633e-9):
