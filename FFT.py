@@ -102,13 +102,13 @@ def normalize(x):
     x = x/maximum
     return x
 
-x = np.linspace(0,2*np.pi,100)
-y = rect(x)
-frec = np.fft.fftfreq(100)
-FT, f = NUFFT(y,x)
-FTEO = np.fft.fftshift(np.fft.fft(y))
-plt.plot(normalize(np.abs(np.fft.fftshift(FT))),label='Propietary')
-plt.plot(normalize(np.abs(FTEO)),label='Numpy')
-plt.title('Fourier Transform rect(x)')
-plt.legend()
-plt.show()
+# x = np.linspace(0,2*np.pi,100)
+# y = rect(x)
+# frec = np.fft.fftfreq(100)
+# FT, f = NUFFT(y,x)
+# FTEO = np.fft.fftshift(np.fft.fft(y))
+# plt.plot(normalize(np.abs(np.fft.fftshift(FT))),label='Propietary')
+# plt.plot(normalize(np.abs(FTEO)),label='Numpy')
+# plt.title('Fourier Transform rect(x)')
+# plt.legend()
+# plt.show()
